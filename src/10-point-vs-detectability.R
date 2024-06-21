@@ -10,6 +10,7 @@
 library(cmdstanr)
 library(bbsBayes2)
 library(ggpubr)
+library(ggdogs)
 theme_set(theme_pubclean())
 bayesplot::color_scheme_set("red")
 

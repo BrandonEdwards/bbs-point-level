@@ -139,6 +139,8 @@ map <- ggdraw()+
 
 p1 <- ind_plot[which(names(ind_plot) == gsub("-", "", st_min))][[1]]
 p2 <- det_plot[which(names(ind_plot) == gsub("-", "", st_min))][[1]]
+p2 <- p2 +   geom_dog(aes(x = 2020, y = 18), dog = "thisisfine", size = 5) +
+  geom_label(aes(x = 2020, y = 22, label = "This is fine"))
 p3 <- route_indices_plot[which(names(route_indices_plot) == gsub("-", "", st_min))][[1]]
 
 ####### Output ####################################
