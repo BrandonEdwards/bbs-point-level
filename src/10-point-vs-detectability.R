@@ -103,7 +103,7 @@ comp_plot <- ggplot(data = to_plot, aes(x = fc, y = trend)) +
   geom_abline(intercept = mean(model_draws$intercept),
               slope = mean(model_draws$beta),
               color = "black", size = 1) +
-  geom_point(alpha = 0.5) +
+  geom_dog(size = 2) +
   xlab("Change in Forest Coverage") +
   ylab("Trend Difference (VARPROP - POINT)") +
   NULL
