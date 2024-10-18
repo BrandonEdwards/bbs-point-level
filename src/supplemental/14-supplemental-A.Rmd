@@ -1,7 +1,6 @@
 ---
-title: "Supplemental A - Comparison of Point-level Models with and without route-level
-  hyperparameter"
-author: "Brandon P.M. Edwards"
+title: ""
+author: ""
 output: pdf_document
 ---
 
@@ -18,15 +17,11 @@ sp <- "OVEN"
 
 ```
 
-# Introduction
-
-Given the structured nature of the current BBS analysis, whereby up to 50 point counts are assembled into a "route" and analyzed at the route level (by summing counts at each point), it is natural to wonder if a point-level model should consider drawing point-level effects from their own independent distributions, i.e. $\psi_j \sim t(3,0,1)$, or if the point-level effects should be drawn from a route-level hyperparameter, i.e. $\psi_j \sim t(3, \mu_J, 1); \mu_J \sim N(0,1)$. This supplemental file explores the differences in indices and trends produced by point-level models with and without route-level hyperparameters. For all three of POINT, DETECT, and VARPROP, we simply compare the 1-to-1 relationship between indices and trends, respectively, for each respective model, to assess if there are any distinct patterns of bias.
-
 # POINT Model Comparison
 
 ```{r point-index, echo=FALSE}
-point_indices <- readRDS(file = paste0("../output/indices/", sp, "_point.RDS"))
-point_RH_indices <- readRDS(file = paste0("../output/indices/", sp, "_point_RH.RDS"))
+point_indices <- readRDS(file = paste0("../../output/indices/", sp, "_point.RDS"))
+point_RH_indices <- readRDS(file = paste0("../../output/indices/", sp, "_point_RH.RDS"))
 
 regions_both <- intersect(point_indices$indices$region, point_RH_indices$indices$region)
 
@@ -50,7 +45,7 @@ index_model_data <- list(N = nrow(point_df_mid),
                    x = point_df_mid$index,
                    beta_mean_prior = 1)
 
-index_comp_model <- cmdstan_model(stan_file = "../models/slr-model.stan")
+index_comp_model <- cmdstan_model(stan_file = "../../models/slr-model.stan")
 
 index_comp_model_run <- index_comp_model$sample(
   data = index_model_data,
@@ -103,7 +98,7 @@ trend_model_data <- list(N = n_trends - 1,
                          x = point_trends$trends$trend[2:n_trends],
                          beta_mean_prior = 1)
 
-trend_comp_model <- cmdstan_model(stan_file = "../models/slr-model.stan")
+trend_comp_model <- cmdstan_model(stan_file = "../../models/slr-model.stan")
 
 trend_comp_model_run <- trend_comp_model$sample(
   data = trend_model_data,
@@ -148,8 +143,8 @@ message(paste0("Slope: ", round(trend_mod_summary[which(trend_mod_summary$variab
 # DETECT Model Comparison
 
 ```{r detect, echo=FALSE}
-detect_indices <- readRDS(file = paste0("../output/indices/", sp, "_detectability.RDS"))
-detect_RH_indices <- readRDS(file = paste0("../output/indices/", sp, "_detectability_RH.RDS"))
+detect_indices <- readRDS(file = paste0("../../output/indices/", sp, "_detectability.RDS"))
+detect_RH_indices <- readRDS(file = paste0("../../output/indices/", sp, "_detectability_RH.RDS"))
 
 regions_both <- intersect(detect_indices$indices$region, detect_RH_indices$indices$region)
 
@@ -173,7 +168,7 @@ index_model_data <- list(N = nrow(detect_df_mid),
                    x = detect_df_mid$index,
                    beta_mean_prior = 1)
 
-index_comp_model <- cmdstan_model(stan_file = "../models/slr-model.stan")
+index_comp_model <- cmdstan_model(stan_file = "../../models/slr-model.stan")
 
 index_comp_model_run <- index_comp_model$sample(
   data = index_model_data,
@@ -227,7 +222,7 @@ trend_model_data <- list(N = n_trends - 1,
                          x = detect_trends$trends$trend[2:n_trends],
                          beta_mean_prior = 1)
 
-trend_comp_model <- cmdstan_model(stan_file = "../models/slr-model.stan")
+trend_comp_model <- cmdstan_model(stan_file = "../../models/slr-model.stan")
 
 trend_comp_model_run <- trend_comp_model$sample(
   data = trend_model_data,
@@ -270,8 +265,8 @@ message(paste0("Slope: ", round(trend_mod_summary[which(trend_mod_summary$variab
 # VARPROP Model Comparison
 
 ```{r varprop, echo=FALSE}
-varprop_indices <- readRDS(file = paste0("../output/indices/", sp, "_varprop.RDS"))
-varprop_RH_indices <- readRDS(file = paste0("../output/indices/", sp, "_varprop_RH.RDS"))
+varprop_indices <- readRDS(file = paste0("../../output/indices/", sp, "_varprop.RDS"))
+varprop_RH_indices <- readRDS(file = paste0("../../output/indices/", sp, "_varprop_RH.RDS"))
 
 regions_both <- intersect(varprop_indices$indices$region, varprop_RH_indices$indices$region)
 
@@ -295,7 +290,7 @@ index_model_data <- list(N = nrow(detect_df_mid),
                    x = detect_df_mid$index,
                    beta_mean_prior = 1)
 
-index_comp_model <- cmdstan_model(stan_file = "../models/slr-model.stan")
+index_comp_model <- cmdstan_model(stan_file = "../../models/slr-model.stan")
 
 index_comp_model_run <- index_comp_model$sample(
   data = index_model_data,
@@ -349,7 +344,7 @@ trend_model_data <- list(N = n_trends - 1,
                          x = varprop_trends$trends$trend[2:n_trends],
                          beta_mean_prior = 1)
 
-trend_comp_model <- cmdstan_model(stan_file = "../models/slr-model.stan")
+trend_comp_model <- cmdstan_model(stan_file = "../../models/slr-model.stan")
 
 trend_comp_model_run <- trend_comp_model$sample(
   data = trend_model_data,
@@ -388,11 +383,3 @@ message(paste0("Slope: ", round(trend_mod_summary[which(trend_mod_summary$variab
                 " [", round(trend_mod_summary[which(trend_mod_summary$variable == "intercept"), "q5"], 4), ", ",
         round(trend_mod_summary[which(trend_mod_summary$variable == "intercept"), "q95"], 4), "]")
 ```
-
-# Conclusion
-
-When comparing indices of abundance between models that include a route-level hyperparameter and models that do not include a route-level hyperparameter, there tended to be very close to a 1-to-1 relationship, with slopes being just slightly above 1 and y-intercepts estimated around zero. That is to say, for lower values of index of abundance, there was virtually no difference between models that included the route-level hyperparameter versus models that do not. However, at higher values of index of abundance, the models that included a route-level hyperparameter had slightly higher values than models that did not include a route-level hyperparameter. 
-
-Given these slight changes in indices, this meant that trends were also slightly affected. None of the trend comparisons followed exactly the 1-to-1 line, however all were very close, with y-intercepts being just below zero but greater than -1, and slopes generally being around 1.02.
-
-With this in mind, we do not feel there is a need to include a route-level hyperparameter in the point-level models (regardless as to whether they account for detectability), because there was no discernable overall difference between indices and trends from either model (with or without the hyperparameter). However, if a researcher felt there was important information at the route level that needed to be captured in the model, or if a researcher wanted to have route hyperparamters that varied based on auxiliary data, then they should feel comfortable including the hyperparamaters (with any additional information).
