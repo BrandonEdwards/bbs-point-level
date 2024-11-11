@@ -49,7 +49,7 @@ sp <- sp_list
   ####### Output ####################################
   
   png(filename = paste0("output/plots/", sp, "-map.png"),
-      width = 5, height = 5, units = "in", res = 300)
+      width = 5, height = 3.5, units = "in", res = 300)
   ggarrange(trend_map_route, trend_map_point, 
             trend_map_detectability, trend_map_varprop, nrow = 2, ncol = 2,
             common.legend = TRUE,

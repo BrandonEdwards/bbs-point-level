@@ -41,7 +41,7 @@ detect_vs_varprop_map <- plot_map(detect_vs_varprop, title = FALSE)
 ####### Output ####################################
 
 png(filename = paste0("output/plots/", sp, "point-vs-detectability-map.png"),
-    width = 6, height = 6, units = "in", res = 600)
+    width = 5, height = 5, units = "in", res = 600)
 ggarrange(point_vs_varprop_map, point_vs_detect_map, ncol = 1,
           labels = c("A", "B"),
           common.legend = TRUE, legend = "right")
